@@ -1,0 +1,21 @@
+package main
+
+import "fmt"
+
+func main() {
+	var num int
+
+	fmt.Scan(&num)
+
+	if num < 0 {
+		fmt.Print("Отрицательное число")
+	} else {
+		reverseNum := 0
+		for num > 0 {
+			n := num % 10
+			reverseNum = reverseNum*10 + n
+			num /= 10
+		}
+		fmt.Print(reverseNum % 10)
+	}
+}
