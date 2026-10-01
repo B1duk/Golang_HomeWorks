@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"sync"
 )
 
 type Figure interface {
@@ -100,13 +101,37 @@ func main() {
 		secondSide: 16,
 		thirdSide:  29,
 	}
+	var wg sync.WaitGroup
 
-	rec.Area()
-	rec.Perimeter()
+	wg.Add(6)
+	go func() {
+		defer wg.Done()
+		rec.Area()
+	}()
+	go func() {
+		defer wg.Done()
+		rec.Perimeter()
+	}()
 
-	cir.Area()
-	cir.Perimeter()
+	go func() {
+		defer wg.Done()
+		cir.Area()
+	}()
 
-	tri.Area()
-	tri.Perimeter()
+	go func() {
+		defer wg.Done()
+		cir.Perimeter()
+	}()
+
+	go func() {
+		defer wg.Done()
+		tri.Area()
+	}()
+
+	go func() {
+		defer wg.Done()
+		tri.Perimeter()
+	}()
+
+	wg.Wait()
 }
